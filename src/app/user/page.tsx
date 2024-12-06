@@ -1,14 +1,15 @@
 "use client";
 import { useRole } from "@/hooks/useRole";
+import DashboardHead from "./usesrComponents/dashboardHead";
 
 export default function UserProfile() {
   useRole("user");
 
-
   return (
     <div>
-      <h1>Welcome, User</h1>
-      <p>This is your profile page.</p>
+      <header className="bg-white shadow">
+        <DashboardHead />
+      </header>
     </div>
   );
 }
