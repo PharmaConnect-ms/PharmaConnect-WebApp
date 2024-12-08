@@ -2,32 +2,72 @@ import React from "react";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Button } from "@/components/ui/button";
 import UserInformation from "./userInformation";
+import TodaysReminder from "./todaysRemider";
+import UserFeatures from "./userFeatures";
+import Grid from "@mui/material/Grid2";
 
 const DashboardUsercard = () => {
   return (
-    <div className="flex items-center justify-center pt-24">
-      <div className="bg-white flex flex-col absolute w-[90%] rounded-3xl h-auto p-8">
-        <div className="flex items-center relative gap-5 w-full">
-          <Avatar className="h-16 w-16">
-            <AvatarImage src="https://github.com/shadcn.png" />
-            <AvatarFallback>CN</AvatarFallback>
-          </Avatar>
-          <div>
-            <h1 className="text-xl">UserName</h1>
-            <p className="text-xs">Age</p>
-          </div>
-          <div className="absolute right-0 h-full">
+    <Grid
+      container
+      justifyContent="center"
+      alignItems="center"
+      sx={{
+        paddingTop: { xs: "900px", md: "320px" },
+      }}
+    >
+      <Grid
+        container
+        direction="column"
+        sx={{
+          position: "absolute",
+          width: "90%",
+          borderRadius: "24px",
+          backgroundColor: "white",
+          height: "auto",
+          padding: "32px",
+        }}
+      >
+        <Grid container>
+          <Grid size={{ xs: 9 }}>
+            <div className="flex items-center gap-4">
+              <Avatar className="h-16 w-16">
+                <AvatarImage src="https://github.com/shadcn.png" />
+                <AvatarFallback>CN</AvatarFallback>
+              </Avatar>
+              <div>
+                <h1 className="text-xl">UserName</h1>
+                <p className="text-xs">Age</p>
+              </div>
+            </div>
+          </Grid>
+          <Grid
+            size={{ xs: 3 }}
+            sx={{
+              display: "flex",
+              justifyContent: "flex-end",
+            }}
+          >
             <Button variant="outline" className="bg-[#56AAF0] text-white">
               Edit Profile
             </Button>
-          </div>
-        </div>
+          </Grid>
+        </Grid>
 
-        <div className="flex flex-row w-full gap-4 ">
-          <UserInformation />
-        </div>
-      </div>
-    </div>
+        {/* components */}
+        <Grid container spacing={3}>
+          <Grid size={{ xs: 12, md: 5 }}>
+            <UserInformation />
+          </Grid>
+          <Grid size={{ xs: 12, md: 7 }}>
+            <TodaysReminder />
+          </Grid>
+          <Grid size={{ xs: 12, md: 12 }}>
+            <UserFeatures />
+          </Grid>
+        </Grid>
+      </Grid>
+    </Grid>
   );
 };
 
