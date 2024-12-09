@@ -1,10 +1,13 @@
+"use client";
 import React from "react";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Button } from "@/components/ui/button";
 import UserInformation from "./userInformation";
 import TodaysReminder from "./todaysRemider";
 import UserFeatures from "./userFeatures";
+import EditProfile from "./editProfile";
 import Grid from "@mui/material/Grid2";
+import { Dialog, DialogContent, DialogTrigger } from "@/components/ui/dialog";
 
 const DashboardUsercard = () => {
   return (
@@ -48,9 +51,16 @@ const DashboardUsercard = () => {
               justifyContent: "flex-end",
             }}
           >
-            <Button variant="outline" className="bg-[#56AAF0] text-white">
-              Edit Profile
-            </Button>
+            <Dialog>
+              <DialogTrigger>
+                <Button variant="outline" className="bg-[#56AAF0] text-white">
+                  Edit Profile
+                </Button>
+              </DialogTrigger>
+              <DialogContent>
+                <EditProfile />
+              </DialogContent>
+            </Dialog>
           </Grid>
         </Grid>
 

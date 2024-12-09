@@ -60,7 +60,7 @@ const TodaysReminder = () => {
                   type="checkbox"
                   checked={reminder.hasDone}
                   className="cursor-pointer"
-                  
+                  readOnly 
                 />
               </div>
             </div>

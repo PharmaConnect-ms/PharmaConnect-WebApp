@@ -1,3 +1,4 @@
+"use client";
 import React from "react";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import NotificationsIcon from "@mui/icons-material/Notifications";
@@ -14,7 +15,12 @@ import { useAuth } from "@/context/AuthContext";
 import { useRouter } from "next/navigation";
 import { motion } from "framer-motion";
 import MenuIcon from "@mui/icons-material/Menu";
-import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
+import {
+  Sheet,
+  SheetContent,
+  SheetTrigger,
+  SheetHeader,
+} from "@/components/ui/sheet";
 
 const DashboardHead = () => {
   const { logout } = useAuth();
@@ -32,12 +38,19 @@ const DashboardHead = () => {
           <SheetTrigger>
             <MenuIcon sx={{ color: "white ", cursor: "pointer" }} />
           </SheetTrigger>
+
           <SheetContent
             side={"left"}
-            className="w-72 rounded-tr-xl rounded-br-xl pt-20"
+            className="w-72 rounded-tr-xl rounded-br-xl pt-10"
           >
-            <div className="w-full flex flex-col">
-              
+            <SheetHeader></SheetHeader>
+            <div className="w-full flex flex-col gap-2">
+              <span className="text-lg font-semibold rounded-lg p-1 flex items-center justify-center hover:bg-[#56AAF0] hover:text-white hover:shadow-md hover:cursor-pointer">
+                My History
+              </span>
+              <span className="text-lg font-semibold rounded-lg p-1 flex items-center justify-center hover:bg-[#56AAF0] hover:text-white hover:shadow-md hover:cursor-pointer">
+                QR
+              </span>
             </div>
           </SheetContent>
         </Sheet>
