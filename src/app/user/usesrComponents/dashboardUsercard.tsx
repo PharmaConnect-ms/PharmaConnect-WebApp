@@ -1,5 +1,5 @@
 "use client";
-import React from "react";
+import React, { useState } from "react";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Button } from "@/components/ui/button";
 import UserInformation from "./userInformation";
@@ -10,6 +10,16 @@ import Grid from "@mui/material/Grid2";
 import { Dialog, DialogContent, DialogTrigger } from "@/components/ui/dialog";
 
 const DashboardUsercard = () => {
+  const [open, setOpen] = useState(false);
+
+  const handleChangeProfile = () => {
+    setOpen(false);
+  };
+  const user = JSON.parse(localStorage.getItem("user") || "{}");
+  const userName = user.username || "UserName";
+  const userAge = user.age || "";
+
+
   return (
     <Grid
       container
@@ -39,8 +49,8 @@ const DashboardUsercard = () => {
                 <AvatarFallback>CN</AvatarFallback>
               </Avatar>
               <div>
-                <h1 className="text-xl">UserName</h1>
-                <p className="text-xs">Age</p>
+                <h1 className="text-xl">{userName}</h1>
+                <p className="text-xs">{userAge}</p>
               </div>
             </div>
           </Grid>
@@ -51,14 +61,14 @@ const DashboardUsercard = () => {
               justifyContent: "flex-end",
             }}
           >
-            <Dialog>
+            <Dialog open={open} onOpenChange={setOpen}>
               <DialogTrigger>
                 <Button variant="outline" className="bg-[#56AAF0] text-white">
                   Edit Profile
                 </Button>
               </DialogTrigger>
               <DialogContent>
-                <EditProfile />
+                <EditProfile onChangeProfile={handleChangeProfile} />
               </DialogContent>
             </Dialog>
           </Grid>

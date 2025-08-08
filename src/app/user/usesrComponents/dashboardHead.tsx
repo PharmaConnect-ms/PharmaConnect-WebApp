@@ -31,6 +31,10 @@ const DashboardHead = () => {
     Router.push("/login");
   };
 
+  const handleNotificationClick = () => {
+    Router.push("user/remainders");
+  };
+
   return (
     <div className="flex justify-between h-[200px] pb-28 items-center p-10 bg-[#56AAF0] rounded-bl-3xl rounded-br-3xl bg-[url('/userDashboardDesign.png')] bg-opacity-80 bg-cover bg-blend-overlay bg-[center_-100px]">
       <div className="flex flex-row justify-center gap-2 pb-5">
@@ -68,7 +72,7 @@ const DashboardHead = () => {
           }}
           className="inline-block"
         >
-          <NotificationsIcon className="text-white" />
+          <NotificationsIcon onClick={handleNotificationClick} className="text-white" />
         </motion.div>{" "}
         <DropdownMenu>
           <DropdownMenuTrigger>

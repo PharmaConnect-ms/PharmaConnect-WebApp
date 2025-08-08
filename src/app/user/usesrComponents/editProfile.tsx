@@ -9,10 +9,15 @@ import {
 } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 
-const EditProfile = () => {
+interface EditProfileProps {
+    onChangeProfile: () => void;
+}
+
+
+const EditProfile: React.FC<EditProfileProps> = ({onChangeProfile}) => {
 
 const updateProfile = () => {
-    
+    onChangeProfile()
 }
 
     
@@ -75,7 +80,7 @@ const updateProfile = () => {
         </div>
       </CardContent>
       <CardFooter>
-      <button className="bg-[#56AAF0] text-white py-2 px-6 rounded-md flex ml-auto" onClick={updateProfile}>
+      <button className="bg-[#56AAF0] text-white py-2 px-6 rounded-md flex ml-auto hover:bg-[#f8f8f8] hover:shadow-sm hover:text-black" onClick={updateProfile}>
       Save
         </button>
       </CardFooter>

@@ -1,6 +1,7 @@
 "use client";
 import React from "react";
 import { useState } from "react";
+import {register} from "@/services/auth";
 
 interface SignupBoxProps {
   signRedirectButtonClicked: () => void;
@@ -15,6 +16,28 @@ const SignupBox: React.FC<SignupBoxProps> = ({ signRedirectButtonClicked }) => {
   const handleSignup = (e: React.FormEvent) => {
     e.preventDefault();
     if (error) setError("");
+    const payload = {
+      username: name,
+      email: email,
+      password: password,
+      role : "user",
+      provider: "local",
+    };
+
+    register(payload)
+      .then((res:any) => {
+        if (res) {
+          console.log("User registered successfully:", res);
+          signRedirectButtonClicked();
+        } else {
+          setError("Registration failed. Please try again.");
+        }
+      })
+      .catch((err:any) => {
+        console.error("Error during registration:", err);
+        setError("Registration failed. Please try again.");
+      });
+
   };
   
   if (typeof window !== 'undefined') {
@@ -90,6 +113,7 @@ const SignupBox: React.FC<SignupBoxProps> = ({ signRedirectButtonClicked }) => {
           {/* Submit Button */}
           <button
             type="submit"
+            onClick={handleSignup}
             className="w-full text-white py-2 px-4 rounded-lg hover:opacity-90 transition bg-gradient-to-r from-[#42C5E7] to-[#56AAF0]"
           >
             Sign Up

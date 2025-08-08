@@ -3,6 +3,8 @@ import React from "react";
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { useAuth } from "@/context/AuthContext";
+import { login } from "@/services/auth";
+
 
 interface LoginBoxProps {
   signupButtonClicked: () => void;
@@ -12,24 +14,62 @@ const LoginBox: React.FC<LoginBoxProps> = ({ signupButtonClicked }) => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
-  const { login } = useAuth();
+  const { login: authLogin } = useAuth();
   const router = useRouter();
 
   const handleLogin = (e: React.FormEvent) => {
     e.preventDefault();
 
-    if (email === "admin@pharma.com" && password === "admin123") {
-      login("admin", "Admin User", "admin123");
-      router.push("/admin");
-    } else if (email === "doctor@pharma.com" && password === "doctor123") {
-      login("doctor", "Dr. John Doe", "doctor123");
-      router.push("/doctor");
-    } else if (email === "user@pharma.com" && password === "user123") {
-      login("user", "Jane Doe", "user123");
-      router.push("/user");
-    } else {
-      setError("Invalid credentials. Please try again.");
-    }
+    const payload = {
+      usernameOrEmail: email,
+      password: password,
+    };
+
+    login(payload)
+      .then((res: any) => {
+        if (res) {
+          console.log("User logged in successfully:", res);
+          localStorage.setItem("user", JSON.stringify({
+            id: res.id,
+            username: res.username,
+            email: res.email,
+            role: res.role,
+            token: res.token.access_token,
+          }));
+          authLogin(res.role, res.username, res.id);
+          if (res.role === "admin") {
+            router.push("/admin");
+          }
+          else if (res.role === "doctor") {
+            router.push("/doctor");
+          }
+          else if (res.role === "user") {
+            console.log("User logged in successfully:", res.role);
+            router.push("/user");
+          }
+          router.push("/user");
+        } else {
+          setError("Invalid credentials. Please try again.");
+        }
+      })
+      .catch((err: any) => {
+        console.error("Error during login:", err);
+        setError("Invalid credentials. Please try again.");
+      });
+
+    // if (email === "admin@pharma.com" && password === "admin123") {
+    //   login("admin", "Admin User", "admin123");
+    //   router.push("/admin");
+    // } else if (email === "doctor@pharma.com" && password === "doctor123") {
+    //   login("doctor", "Dr. John Doe", "doctor123");
+    //   router.push("/doctor");
+    // } else if (email === "user@pharma.com" && password === "user123") {
+    //   login("user", "Jane Doe", "user123");
+    //   router.push("/user");
+    // } else {
+    //   setError("Invalid credentials. Please try again.");
+    // }
+
   };
 
   return (
