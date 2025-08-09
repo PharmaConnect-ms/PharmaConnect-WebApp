@@ -1,7 +1,7 @@
 "use client";
 import { useEffect, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import LoginBox from "./logincomponents/loginBox";
+import LoginBox from "./logincomponents/login-box/login-box";
 import ImageBox from "./logincomponents/imageBox";
 import SignupBox from "./logincomponents/signupBox";
 

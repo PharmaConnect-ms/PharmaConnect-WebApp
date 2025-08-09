@@ -1,6 +1,6 @@
 
-import { AuthProvider } from "@/context/AuthContext";
 import "./globals.css";
+import ReduxProvider from "@/redux/ReduxProvider";
 
 export const metadata = {
   title: "PharmaConnect",
@@ -11,7 +11,9 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
   return (
     <html lang="en">
       <body>
-        <AuthProvider>{children}</AuthProvider>
+        <ReduxProvider>
+          {children}
+        </ReduxProvider>
       </body>
     </html>
   );

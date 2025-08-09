@@ -1,12 +1,12 @@
 "use client";
-import { useRole } from "@/hooks/useRole";
 import DashboardHead from "./usesrComponents/dashboardHead";
 import DashboardUsercard from "./usesrComponents/dashboardUsercard";
 import { motion } from "framer-motion";
+import { useRequireAuth } from "@/hooks/useRequireAuth";
 
 
 export default function UserProfile() {
-  useRole("user");
+  useRequireAuth(['user']); 
 
   return (
     <motion.div

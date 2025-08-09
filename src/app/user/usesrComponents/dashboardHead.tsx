@@ -11,7 +11,6 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import LogoutIcon from "@mui/icons-material/Logout";
-import { useAuth } from "@/context/AuthContext";
 import { useRouter } from "next/navigation";
 import { motion } from "framer-motion";
 import MenuIcon from "@mui/icons-material/Menu";
@@ -21,15 +20,10 @@ import {
   SheetTrigger,
   SheetHeader,
 } from "@/components/ui/sheet";
+import useLogout from "@/hooks/useLogout";
 
 const DashboardHead = () => {
-  const { logout } = useAuth();
   const Router = useRouter();
-
-  const handleLogout = async () => {
-    logout();
-    Router.push("/login");
-  };
 
   const handleNotificationClick = () => {
     Router.push("user/remainders");
@@ -84,7 +78,7 @@ const DashboardHead = () => {
           <DropdownMenuContent>
             <DropdownMenuLabel>My Account</DropdownMenuLabel>
             <DropdownMenuSeparator />
-            <DropdownMenuItem onClick={handleLogout}>
+            <DropdownMenuItem onClick={useLogout()}>
               <LogoutIcon />
               <span>Log out</span>
             </DropdownMenuItem>
