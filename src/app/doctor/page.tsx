@@ -1,13 +1,13 @@
-// src/app/doctor/dashboard/page.tsx
-import { useRole } from '@/hooks/useRole';
+"use client";
+import { useRequireAuth } from "@/hooks/useRequireAuth";
+import DoctorDashboard from "./pages/doctor-dashboard/doctor-dashboard";
 
-export default function DoctorDashboard() {
-  const user = useRole('doctor');
+
+export default function DoctorPage() {
+  useRequireAuth(['doctor']); 
+
 
   return (
-    <div>
-      <h1>Welcome, Dr. {user?.name}</h1>
-      <p>This is the Doctor Dashboard</p>
-    </div>
+      <DoctorDashboard />
   );
 }

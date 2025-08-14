@@ -12,11 +12,11 @@ export type AuthUser = {
 };
 
 type AuthState = {
-  user: AuthUser | null;
+  user: AuthUser | null | undefined;
 };
 
 const initialState: AuthState = {
-  user: null,
+  user: undefined ,
 };
 
 const authSlice = createSlice({
@@ -40,5 +40,5 @@ export default authSlice.reducer;
 
 // Selectors
 export const selectAuthUser = (state: any) => state.auth.user as AuthUser | null;
-export const selectIsAuthenticated = (state: any) => !!state.auth.user;
+export const selectIsAuthenticated = (state: any) => state.auth.user === undefined ? null : !!state.auth.user;
 export const selectRole = (state: any) => state.auth.user?.role as UserRole | undefined;

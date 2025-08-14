@@ -12,12 +12,15 @@ export function useRequireAuth(roles?: UserRole[]) {
   const router = useRouter();
 
   useEffect(() => {
-    if (!isAuthed) {
+    if (isAuthed === null) return;
+
+    if (isAuthed === false) {
       router.replace('/login');
       return;
     }
-    if (roles && role && !roles.includes(role)) {
-      router.replace('/'); // or /403
+
+    if (roles?.length && role && !roles.includes(role)) {
+      router.replace('/'); // need to redirect to 403
     }
   }, [isAuthed, role, roles, router]);
 }

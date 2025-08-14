@@ -20,7 +20,7 @@ const SignupBox: React.FC<SignupBoxProps> = ({ signRedirectButtonClicked }) => {
       username: name,
       email: email,
       password: password,
-      role : "user",
+      role : "patient",
       provider: "local",
     };
 
