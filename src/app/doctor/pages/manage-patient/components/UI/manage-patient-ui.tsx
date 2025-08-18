@@ -1,3 +1,5 @@
+'use client'
+
 import React from "react";
 import { usePatientStore } from "../../patient-store";
 import { Button } from "@mui/material";
@@ -7,7 +9,7 @@ import AddPrescriptionModal from "../modals/add-prescription-modal";
 
 const ManagePatientUI: React.FC = () => {
     const { data , clearPatientData } = usePatientStore();
-    const { onAddPrescription , isAddPrescriptionModalOpen , setIsAddPrescriptionModalOpen } = useManagePatient();
+    const { onAddPrescription , isAddPrescriptionModalOpen , setIsAddPrescriptionModalOpen , onSavePrescription } = useManagePatient();
 
     return (
         <div>
@@ -47,7 +49,7 @@ const ManagePatientUI: React.FC = () => {
                 open={isAddPrescriptionModalOpen}
                 onClose={() => setIsAddPrescriptionModalOpen(false)}
             >
-                <AddPrescriptionModal />
+                <AddPrescriptionModal onClose={() => setIsAddPrescriptionModalOpen(false)} onSavePrescription={onSavePrescription} />
             </PharmaModal>
         </div>
     );

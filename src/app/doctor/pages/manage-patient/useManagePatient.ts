@@ -3,7 +3,9 @@
 import { useEffect, useState } from "react";   
 import { usePatientStore } from "./patient-store";
 import { useGetPatientByUserIdQuery} from "@/redux/api/UserApi";
-
+import { RichTextPayload } from "./components/molecules/PrescriptionRichTextEditor";
+import { DrawingPayload } from "./components/molecules/PrescriptionCanvas";
+import { savePrescription } from "./logic/savePrescription";
 
 export const useManagePatient = () => {
     const [isPatientDataLoaded, setIsPatientDataLoaded] = useState(false);
@@ -38,9 +40,18 @@ export const useManagePatient = () => {
         setIsAddPrescriptionModalOpen(true);
     }
 
+    const onSavePrescription = async (payload: RichTextPayload | DrawingPayload) => {
+        console.log("Saving prescription:", payload);
+        if(payload.type === 'text') {
+          const result = await savePrescription(payload as RichTextPayload);
+          console.log("Downloaded prescription as PNG:", result);
+        }
+    };
+
   return {
     isPatientDataLoaded, setIsPatientDataLoaded,
     onSelectPatient, clearPatientData, onAddPrescription,
-    isAddPrescriptionModalOpen, setIsAddPrescriptionModalOpen
+    isAddPrescriptionModalOpen, setIsAddPrescriptionModalOpen,
+    onSavePrescription
   };
 };
