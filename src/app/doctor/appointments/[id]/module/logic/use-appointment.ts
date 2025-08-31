@@ -18,6 +18,8 @@ export const useAppointmentPage = ({ appointmentId }: DoctorSchedulePageProps) =
   const { data: conditionBooks, isLoading: isConditionBooksLoading } = useGetAllConditionBooksByPatientIdQuery(patient?.id ?? "", { skip: !patient?.id || undefined });
   const [createConditionBook, { isLoading: isCreatingConditionBook }] = useCreateConditionBookMutation();
 
+console.log(prescriptions)
+
   return {
     appointment,
     isAppointmentLoading,

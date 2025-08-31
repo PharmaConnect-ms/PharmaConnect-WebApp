@@ -1,5 +1,5 @@
 import { baseApi } from './baseApi';
-import { ConditionBooksResponse, CreatePrescriptionPayload } from '@/types';
+import { ConditionBooksResponse, ConditionBookPayload } from '@/types';
 
 export const ConditionBooksApi = baseApi.injectEndpoints({
   endpoints: (builder) => ({
@@ -8,7 +8,7 @@ export const ConditionBooksApi = baseApi.injectEndpoints({
       query: (patientId) => `/condition-books/patient/${patientId}`,
     }),
 
-    createConditionBook: builder.mutation<ConditionBooksResponse, CreatePrescriptionPayload>({
+    createConditionBook: builder.mutation<ConditionBooksResponse, ConditionBookPayload>({
       query: (payload) => ({
         url: '/condition-books',
         method: 'POST',

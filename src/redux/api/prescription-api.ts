@@ -5,12 +5,12 @@ export const PrescriptionApi = baseApi.injectEndpoints({
   endpoints: (builder) => ({
 
     getPrescriptionByUserId: builder.query<PrescriptionResponse[], string>({
-      query: (userId) => `/prescriptions/user/${userId}`,
+      query: (userId) => `/prescription/user/${userId}`,
     }),
 
     addPrescription: builder.mutation<PrescriptionResponse, CreatePrescriptionPayload>({
       query: (newPrescription) => ({
-        url: '/prescriptions',
+        url: '/prescription',
         method: 'POST',
         body: newPrescription,
       }),
