@@ -1,7 +1,10 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 "use client";
 import React from "react";
 import { useState } from "react";
-import {register} from "@/services/auth";
+import { useRegisterMutation } from "@/redux/api/authApi";
+import { useLoginLogic } from "./login-box/useLoginLogic";
+import { CircularProgress } from "@mui/material";
 
 interface SignupBoxProps {
   signRedirectButtonClicked: () => void;
@@ -12,6 +15,9 @@ const SignupBox: React.FC<SignupBoxProps> = ({ signRedirectButtonClicked }) => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
+  const [register, { isLoading }] = useRegisterMutation();
+  const { handleSignUp, isLoading: isLoginLoading } = useLoginLogic();
+
 
   const handleSignup = (e: React.FormEvent) => {
     e.preventDefault();
@@ -20,28 +26,33 @@ const SignupBox: React.FC<SignupBoxProps> = ({ signRedirectButtonClicked }) => {
       username: name,
       email: email,
       password: password,
-      role : "patient",
+      role: "patient",
       provider: "local",
     };
 
     register(payload)
-      .then((res:any) => {
+      .unwrap()
+      .then((res: any) => {
         if (res) {
           console.log("User registered successfully:", res);
-          signRedirectButtonClicked();
+          handleSignUp({ email, password });
         } else {
           setError("Registration failed. Please try again.");
         }
       })
-      .catch((err:any) => {
+      .catch((err: any) => {
         console.error("Error during registration:", err);
         setError("Registration failed. Please try again.");
       });
 
   };
-  
+
   if (typeof window !== 'undefined') {
     // client-specific rendering
+  }
+
+  if (isLoading || isLoginLoading) {
+    return <CircularProgress />;
   }
 
   return (

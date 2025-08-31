@@ -1,12 +1,14 @@
 "use client";
 import React from "react";
-import { useRole } from "@/hooks/useRole";
 import { motion } from "framer-motion";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import RemainderTab from "./remindercomponents/reminderTab";
+import { useRequireAuth } from "@/hooks/useRequireAuth";
+
 
 const Remainders = () => {
-  useRole("user");
+  useRequireAuth(['patient']);
+
   return (
     <motion.div
       initial={{ opacity: 0, x: -100 }}

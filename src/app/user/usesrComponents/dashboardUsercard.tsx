@@ -8,17 +8,23 @@ import UserFeatures from "./userFeatures";
 import EditProfile from "./editProfile";
 import Grid from "@mui/material/Grid2";
 import { Dialog, DialogContent, DialogTrigger } from "@/components/ui/dialog";
+import { useSelector } from 'react-redux';
+import { selectAuthUser } from '@/redux/features/authSlice';
+import { useGetUserByIdQuery } from "@/redux/api/UserApi";
+
 
 const DashboardUsercard = () => {
+  const user = useSelector(selectAuthUser);
+  const userId = user?.userID;
   const [open, setOpen] = useState(false);
+  const { data: userData } = useGetUserByIdQuery(userId as string);
 
   const handleChangeProfile = () => {
     setOpen(false);
   };
-  const user = JSON.parse(localStorage.getItem("user") || "{}");
-  const userName = user.username || "UserName";
-  const userAge = user.age || "";
 
+  const userName = userData?.username || "UserName";
+  const userAge = userData?.age || "";
 
   return (
     <Grid
@@ -64,11 +70,11 @@ const DashboardUsercard = () => {
             <Dialog open={open} onOpenChange={setOpen}>
               <DialogTrigger>
                 <Button variant="outline" className="bg-[#56AAF0] text-white">
-                  Edit Profile
+                  Update Profile
                 </Button>
               </DialogTrigger>
               <DialogContent>
-                <EditProfile onChangeProfile={handleChangeProfile} />
+                <EditProfile onChangeProfile={handleChangeProfile} userId={userId} />
               </DialogContent>
             </Dialog>
           </Grid>

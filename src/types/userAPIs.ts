@@ -9,4 +9,6 @@ export type UserResponse = {
     address?: string;
     role?: role;
     provider?: provider;
+    userSummary?: string;
+    profilePicture?: string;
     };

@@ -1,6 +1,6 @@
 "use client";
 import { useRequireAuth } from "@/hooks/useRequireAuth";
-import DoctorDashboard from "./pages/doctor-dashboard/doctor-dashboard";
+import DoctorDashboard from "./module/ui/doctor-dashboard";
 
 
 export default function DoctorPage() {

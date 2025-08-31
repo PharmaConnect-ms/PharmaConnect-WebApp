@@ -1,6 +1,7 @@
 "use client";
 import React from "react";
 import { useLoginLogic } from "./useLoginLogic";
+import { CircularProgress } from "@mui/material";
 
 
 interface LoginBoxProps {
@@ -9,6 +10,10 @@ interface LoginBoxProps {
 
 const LoginBox: React.FC<LoginBoxProps> = ({ signupButtonClicked }) => {
   const { emailOrUsername, setEmailOrUsername, password, setPassword, error, isLoading, handleLogin } = useLoginLogic();
+
+  if (isLoading) {
+    return <CircularProgress />;
+  }
 
   return (
     <div className="flex justify-center items-center h-screen ">
