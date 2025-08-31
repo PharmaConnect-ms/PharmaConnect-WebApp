@@ -2,7 +2,6 @@
 import React from 'react';
 import { useDoctorSchedulePage } from "../logic/useDoctorSchedulePage";
 import ResponsiveAppointmentView from "@/components/time-slots/ResponsiveAppointmentView";
-import { AppointmentSlot } from '@/types/appointment-booking';
 import { Box, CircularProgress, Typography, Paper } from '@mui/material';
 
 interface DoctorSchedulePageUIProps {
@@ -10,20 +9,8 @@ interface DoctorSchedulePageUIProps {
 }
 
 export default function DoctorSchedulePageUI({ scheduleId }: DoctorSchedulePageUIProps) {
-  const { timeSlots } = useDoctorSchedulePage({ scheduleId });
+  const { timeSlots , handleViewDetails } = useDoctorSchedulePage({ scheduleId });
 
-  const handleViewDetails = (slot: AppointmentSlot) => {
-    // TODO: Navigate to appointment details page
-    console.log('Viewing appointment details:', {
-      appointmentId: slot.appointment?.id,
-      appointmentNo: slot.appointment?.appointmentNo,
-      patient: slot.patientName,
-      slotTime: `${slot.startTime} - ${slot.endTime}`,
-      doctor: slot.doctorSchedule?.doctor?.username,
-      date: slot.doctorSchedule?.date
-    });
-    // Example: router.push(`/appointments/${slot.appointment?.id}`);
-  };
 
   // Loading state
   if (timeSlots === undefined) {

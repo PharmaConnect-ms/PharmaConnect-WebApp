@@ -2,3 +2,8 @@ export * from "./common-types";
 export * from "./userAPIs";
 export * from "./doctor-schedule";
 export * from "./time-slots";
+export * from "./appointment-types";
+export * from "./prescription-types";
+export * from "./condition-book-types";
+export * from "./book-entry";
+export * from "./follow-ups";
