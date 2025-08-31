@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState } from 'react';
+import React from 'react';
 import { Container, Box, Grid, Alert, Snackbar } from '@mui/material';
 import Loading from "@/components/ui/loading";
 import { useAppointmentPage } from "../logic/use-appointment";
@@ -9,7 +9,6 @@ import PrescriptionList from '../components/PrescriptionList';
 import ConditionBooks from '../components/ConditionBooks';
 import CreatePrescriptionModal from '@/components/forms/CreatePrescriptionModal';
 import CreateConditionBookModal from '@/components/forms/CreateConditionBookModal';
-import { BookStatus, SeverityLevel } from '@/types/condition-book-types';
 
 interface AppointmentUIProps {
   appointmentId: string;
@@ -17,102 +16,26 @@ interface AppointmentUIProps {
 
 export default function AppointmentUI({ appointmentId }: AppointmentUIProps) {
   const { 
-    appointment, 
+    appointment,
     isAppointmentLoading,
-    patient, 
+    patient,
     isPatientLoading,
-    prescriptions, 
+    prescriptions,
     isPrescriptionsLoading,
-    addPrescription, 
     isAddingPrescription,
-    conditionBooks, 
+    conditionBooks,
     isConditionBooksLoading,
-    createConditionBook, 
-    isCreatingConditionBook  
+    isCreatingConditionBook,
+    prescriptionModalOpen,
+    setPrescriptionModalOpen,
+    conditionBookModalOpen,
+    setConditionBookModalOpen,
+    notification,
+    handleCloseNotification,
+    handleCreatePrescription,
+    handleCreateConditionBook 
   } = useAppointmentPage({ appointmentId: appointmentId });
 
-  const [prescriptionModalOpen, setPrescriptionModalOpen] = useState(false);
-  const [conditionBookModalOpen, setConditionBookModalOpen] = useState(false);
-  const [notification, setNotification] = useState<{
-    open: boolean;
-    message: string;
-    severity: 'success' | 'error' | 'info' | 'warning';
-  }>({
-    open: false,
-    message: '',
-    severity: 'info'
-  });
-
-  const showNotification = (message: string, severity: 'success' | 'error' | 'info' | 'warning' = 'info') => {
-    setNotification({
-      open: true,
-      message,
-      severity
-    });
-  };
-
-  const handleCloseNotification = () => {
-    setNotification(prev => ({ ...prev, open: false }));
-  };
-
-  const handleCreatePrescription = async (data: { 
-    file: File; 
-    patientName: string; 
-    notes?: string 
-  }) => {
-    try {
-      if (!patient || !appointment) return;
-      
-      const payload = {
-        file: data.file,
-        patientName: data.patientName,
-        doctorId: appointment.doctor.id,
-        patientId: parseInt(patient.id)
-      };
-
-      await addPrescription(payload).unwrap();
-      setPrescriptionModalOpen(false);
-      showNotification('Prescription created successfully!', 'success');
-    } catch (error) {
-      console.error('Error creating prescription:', error);
-      showNotification('Failed to create prescription. Please try again.', 'error');
-    }
-  };
-
-  const handleCreateConditionBook = async (data: {
-    title: string;
-    status: BookStatus;
-    onsetDate: Date;
-    severity: SeverityLevel;
-    allergies?: string;
-    goals: Record<string, string>;
-    instructions: string;
-    reviewIntervalDays: number;
-  }) => {
-    try {
-      if (!patient || !appointment) return;
-      
-      const payload = {
-        patientId: patient.id,
-        primaryDoctorId: appointment.doctor.id.toString(),
-        title: data.title,
-        status: data.status,
-        onsetDate: data.onsetDate.toISOString().split('T')[0],
-        severity: data.severity,
-        allergies: data.allergies,
-        goals: data.goals,
-        instructions: data.instructions,
-        reviewIntervalDays: data.reviewIntervalDays
-      };
-
-      await createConditionBook(payload).unwrap();
-      setConditionBookModalOpen(false);
-      showNotification('Condition book created successfully!', 'success');
-    } catch (error) {
-      console.error('Error creating condition book:', error);
-      showNotification('Failed to create condition book. Please try again.', 'error');
-    }
-  };
 
   if (isAppointmentLoading || isPatientLoading) {
     return (

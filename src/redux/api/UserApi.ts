@@ -6,7 +6,7 @@ export const userApi = baseApi.injectEndpoints({
 
     getUserById: builder.query<UserResponse, string | number>({
       query: (id) => `/users/${id}`,
-      providesTags: (result, error, id) => [{ type: 'User', id }],
+      providesTags: ['User' , 'prescription'],
     }),
 
     getPatientByUserId: builder.query<UserResponse, string | number>({

@@ -48,6 +48,7 @@ interface ConditionBooksProps {
     isLoading: boolean;
     onCreateConditionBook: () => void;
     isCreating?: boolean;
+    onOpenBook?: (conditionBookId: string) => void;
 }
 
 const ConditionBooks: React.FC<ConditionBooksProps> = ({
@@ -55,6 +56,7 @@ const ConditionBooks: React.FC<ConditionBooksProps> = ({
     isLoading,
     onCreateConditionBook,
     isCreating = false,
+    onOpenBook,
 }) => {
     const [selectedBook, setSelectedBook] =
         useState<ConditionBooksResponse | null>(null);
@@ -638,11 +640,24 @@ const ConditionBooks: React.FC<ConditionBooksProps> = ({
                             </Box>
                         </DialogContent>
 
-                        <DialogActions sx={{ px: 3, pb: 2 }}>
-                            <Button onClick={handleCloseViewer} variant="text">
-                                Close
-                            </Button>
-                        </DialogActions>
+                                            <DialogActions sx={{ px: 3, pb: 2 }}>
+                                                <Button onClick={handleCloseViewer} variant="text">
+                                                    Close
+                                                </Button>
+                                                <Button
+                                                    onClick={() => {
+                                                        if (selectedBook) {
+                                                            if (onOpenBook) onOpenBook(String(selectedBook.id));
+                                                            handleCloseViewer();
+                                                        }
+                                                    }}
+                                                    variant="contained"
+                                                    color="primary"
+                                                    sx={{ textTransform: 'none' }}
+                                                >
+                                                    OPEN BOOK
+                                                </Button>
+                                            </DialogActions>
                     </>
                 )}
             </Dialog>

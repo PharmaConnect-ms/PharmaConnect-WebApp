@@ -37,32 +37,55 @@ const PatientSummaryCard: React.FC<PatientSummaryProps> = ({ userSummary }) => {
 
     try {
       // Split by main headings and process each section
-      const sections = summary.split(/\*\*([^*]+)\*\*:/);
+      const sections = summary.split(/\*\*([^*]+)\*\*:\s*/);
       
       for (let i = 1; i < sections.length; i += 2) {
         const heading = sections[i].toLowerCase().trim();
         const content = sections[i + 1]?.trim() || '';
         
-        // Extract bullet points, filtering out empty ones and dashes
-        const items = content
-          .split(/[-•]\s+/)
-          .map(item => item.trim())
-          .filter(item => item && item !== '-' && item !== '' && item !== 'Illegible')
-          .map(item => {
-            // Clean up any remaining formatting
-            return item.replace(/^\s*-\s*/, '').trim();
-          })
-          .filter(item => item.length > 0);
+        // Skip if content is just a dash or empty
+        if (!content || content === '-') {
+          continue;
+        }
 
+        // Extract bullet points from content
+        const items: string[] = [];
+        
+        // Split content by lines and process each line
+        const lines = content.split('\n');
+        
+        for (const line of lines) {
+          const trimmedLine = line.trim();
+          if (!trimmedLine || trimmedLine === '-') continue;
+          
+          // Stop if we hit another heading
+          if (trimmedLine.match(/^\*\*[^*]+\*\*:/)) break;
+          
+          if (trimmedLine.startsWith('-') || trimmedLine.startsWith('•')) {
+            // Extract item after bullet point
+            const item = trimmedLine.replace(/^[-•]\s*/, '').trim();
+            if (item && item !== '-' && item !== 'Illegible') {
+              items.push(item);
+            }
+          } else if (trimmedLine) {
+            // If it's not a bullet but has content, add it
+            items.push(trimmedLine);
+          }
+        }
+
+        // Assign to appropriate category based on heading
         if (heading.includes('diagnos')) {
           parsed.diagnoses = items;
-        } else if (heading.includes('medication')) {
+        } else if (heading.includes('current medication') || (heading.includes('medication') && !heading.includes('previous'))) {
           parsed.medications = items;
+        } else if (heading.includes('previous medication')) {
+          // Add previous medications with a prefix for clarity
+          parsed.medications = [...parsed.medications, ...items.map(item => `(Previous) ${item}`)];
         } else if (heading.includes('allergi')) {
           parsed.allergies = items;
         } else if (heading.includes('test') || heading.includes('result')) {
           parsed.testsResults = items;
-        } else if (heading.includes('follow') || heading.includes('advice')) {
+        } else if (heading.includes('follow') || heading.includes('advice') || heading.includes('medical history')) {
           parsed.followUps = items;
         }
       }

@@ -80,3 +80,224 @@ body {
 nextjs-portal {
   display: none;
 }
+
+/* COMPREHENSIVE FIX FOR CHARACTER REVERSAL - HIGHEST PRIORITY */
+*[contenteditable="true"],
+*[contenteditable=""] {
+  direction: ltr !important;
+  text-align: left !important;
+  unicode-bidi: normal !important;
+  writing-mode: horizontal-tb !important;
+  transform: none !important;
+  -webkit-transform: none !important;
+  -moz-transform: none !important;
+  -ms-transform: none !important;
+  /* Disable IME that might cause text reversal */
+  ime-mode: disabled !important;
+  -ms-ime-mode: disabled !important;
+  -webkit-ime-mode: disabled !important;
+}
+
+/* Specific fix for Quill editor */
+.ql-editor,
+.ql-editor *,
+.ql-container,
+.ql-container * {
+  direction: ltr !important;
+  text-align: left !important;
+  unicode-bidi: normal !important;
+  writing-mode: horizontal-tb !important;
+  transform: none !important;
+  -webkit-transform: none !important;
+  -moz-transform: none !important;
+  -ms-transform: none !important;
+  /* Force text rendering */
+  text-rendering: optimizeSpeed !important;
+  -webkit-font-feature-settings: normal !important;
+  font-feature-settings: normal !important;
+}
+
+/* Enhanced Quill Editor Styles */
+.ql-toolbar {
+  @apply border-b border-gray-200 bg-gray-50 rounded-t-md;
+  direction: ltr;
+}
+
+.ql-toolbar .ql-formats {
+  @apply mr-4;
+}
+
+.ql-toolbar button {
+  @apply hover:bg-gray-200 transition-colors duration-200;
+}
+
+.ql-toolbar button.ql-active {
+  @apply bg-blue-100 text-blue-700;
+}
+
+.ql-container {
+  @apply border-gray-200 rounded-b-md;
+  direction: ltr !important;
+  transform: none !important;
+}
+
+.ql-editor {
+  @apply min-h-[400px] p-4 text-gray-800 leading-relaxed;
+  font-family: 'Poppins', sans-serif;
+  direction: ltr !important;
+  text-align: left !important;
+  unicode-bidi: normal !important;
+  transform: none !important;
+  -webkit-transform: none !important;
+  -moz-transform: none !important;
+  -ms-transform: none !important;
+  writing-mode: horizontal-tb !important;
+}
+
+.ql-editor * {
+  direction: ltr !important;
+  text-align: inherit !important;
+  unicode-bidi: normal !important;
+  transform: none !important;
+  -webkit-transform: none !important;
+  writing-mode: inherit !important;
+}
+
+/* Specific fix for mirrored text issue */
+.ql-editor p,
+.ql-editor div,
+.ql-editor span,
+.ql-editor h1,
+.ql-editor h2,
+.ql-editor h3,
+.ql-editor ul,
+.ql-editor ol,
+.ql-editor li {
+  direction: ltr !important;
+  text-align: left !important;
+  unicode-bidi: normal !important;
+}
+
+.ql-editor.ql-blank::before {
+  @apply text-gray-400 italic;
+}
+
+.ql-editor p {
+  @apply mb-2;
+}
+
+.ql-editor h1 {
+  @apply text-2xl font-bold mb-3 text-gray-900;
+}
+
+.ql-editor h2 {
+  @apply text-xl font-semibold mb-2 text-gray-900;
+}
+
+.ql-editor h3 {
+  @apply text-lg font-medium mb-2 text-gray-900;
+}
+
+.ql-editor ul, .ql-editor ol {
+  @apply mb-3;
+}
+
+.ql-editor blockquote {
+  @apply border-l-4 border-blue-400 pl-4 bg-blue-50 py-2 mb-3 italic;
+}
+
+.ql-editor pre.ql-syntax {
+  @apply bg-gray-100 p-3 rounded text-sm overflow-x-auto mb-3;
+}
+
+/* Additional fixes for mirrored text in Quill */
+.ql-snow .ql-editor,
+.ql-bubble .ql-editor {
+  direction: ltr !important;
+  text-align: left !important;
+  transform: none !important;
+  -webkit-transform: none !important;
+  writing-mode: horizontal-tb !important;
+}
+
+/* Ensure all nested elements maintain LTR direction */
+.ql-editor [dir="rtl"] {
+  direction: ltr !important;
+}
+
+/* Aggressive fix for character reversal */
+.ql-editor,
+.ql-editor p,
+.ql-editor div,
+.ql-editor span,
+.ql-editor strong,
+.ql-editor em,
+.ql-editor u {
+  direction: ltr !important;
+  unicode-bidi: normal !important;
+  text-orientation: mixed !important;
+  writing-mode: horizontal-tb !important;
+  transform: none !important;
+  -webkit-transform: none !important;
+  -moz-transform: none !important;
+  -ms-transform: none !important;
+}
+
+/* Force text input behavior */
+.ql-editor {
+  -webkit-text-fill-color: initial !important;
+  -webkit-background-clip: initial !important;
+  text-rendering: auto !important;
+}
+
+.ql-editor .ql-align-right {
+  text-align: right !important;
+  direction: ltr !important;
+}
+
+.ql-editor .ql-align-center {
+  text-align: center !important;
+  direction: ltr !important;
+}
+
+.ql-editor .ql-align-justify {
+  text-align: justify !important;
+  direction: ltr !important;
+}
+
+/* Prescription Editor specific fixes for character reversal */
+.prescription-editor-ltr {
+  direction: ltr !important;
+  text-align: left !important;
+  unicode-bidi: embed !important;
+  writing-mode: horizontal-tb !important;
+  transform: none !important;
+  -webkit-transform: none !important;
+  -moz-transform: none !important;
+  -ms-transform: none !important;
+  text-orientation: upright !important;
+  -webkit-writing-mode: horizontal-tb !important;
+  -ms-writing-mode: horizontal-tb !important;
+}
+
+.prescription-editor-ltr * {
+  direction: ltr !important;
+  unicode-bidi: embed !important;
+  writing-mode: horizontal-tb !important;
+  transform: none !important;
+  -webkit-transform: none !important;
+  -moz-transform: none !important;
+  -ms-transform: none !important;
+}
+
+/* Override any RTL behavior in input events */
+.prescription-editor-ltr:focus {
+  direction: ltr !important;
+  text-align: left !important;
+}
+
+.prescription-editor-ltr p {
+  direction: ltr !important;
+  text-align: left !important;
+  unicode-bidi: embed !important;
+}

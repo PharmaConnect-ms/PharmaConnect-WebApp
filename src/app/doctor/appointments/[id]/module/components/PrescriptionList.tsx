@@ -16,6 +16,7 @@ import {
   Typography,
   CircularProgress,
   Skeleton,
+  Badge
 } from "@mui/material";
 import { Card, CardHeader, CardTitle } from "@/components/ui/card";
 import {
@@ -368,8 +369,14 @@ const PrescriptionList: React.FC<PrescriptionListProps> = ({
         <CardHeader className="pb-4">
           <div className="flex items-center justify-between">
             <CardTitle className="flex items-center gap-3">
-              <Medication className="text-green-600" />
-              Patient Prescriptions ({prescriptions?.length || 0})
+                <Badge
+                color="success"
+                badgeContent={<span className="text-xs">{prescriptions?.length || 0}</span>}
+                anchorOrigin={{ vertical: "top", horizontal: "right" }}
+                >
+                <Medication className="text-green-600" />
+                </Badge>
+              Patient Prescriptions
             </CardTitle>
 
             <Button

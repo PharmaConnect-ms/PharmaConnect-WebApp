@@ -85,13 +85,23 @@ const Editor = forwardRef<QuillType, EditorProps>(function Editor(
       );
 
       const baseModules = {
-        toolbar: [
-          [{ header: [1, 2, 3, false] }],
-          ['bold', 'italic', 'underline'],
-          [{ list: 'ordered' }, { list: 'bullet' }],
-          ['link', 'blockquote', 'code-block'],
-          ['clean'],
-        ],
+        toolbar: {
+          container: [
+            [{ header: [1, 2, 3, false] }],
+            ['bold', 'italic', 'underline', 'strike'],
+            [{ color: [] }, { background: [] }],
+            [{ list: 'ordered' }, { list: 'bullet' }, { indent: '-1' }, { indent: '+1' }],
+            [{ align: [] }],
+            ['link', 'blockquote', 'code-block'],
+            ['clean'],
+          ],
+          handlers: {
+            // Custom handlers can be added here if needed
+          }
+        },
+        clipboard: {
+          matchVisual: false,
+        },
         ...(modules || {}),
       };
 
@@ -100,12 +110,56 @@ const Editor = forwardRef<QuillType, EditorProps>(function Editor(
         readOnly,
         placeholder,
         modules: baseModules,
+        formats: [
+          'header', 'bold', 'italic', 'underline', 'strike',
+          'color', 'background', 'list', 'bullet', 'indent',
+          'align', 'link', 'blockquote', 'code-block'
+        ],
       });
 
       quillRef.current = quill;
       if (ref && typeof ref !== 'function') {
         (ref as MutableRefObject<QuillType | null>).current = quill;
       }
+
+      // Simple and effective text direction fix
+      const editor = quill.root;
+      
+      // Set fundamental text direction properties
+      editor.style.direction = 'ltr';
+      editor.style.textAlign = 'left';
+      editor.style.unicodeBidi = 'embed';
+      editor.style.writingMode = 'horizontal-tb';
+      editor.setAttribute('dir', 'ltr');
+      
+      // Add class for CSS styling
+      editor.classList.add('prescription-editor-ltr');
+      
+      // Simple observer to maintain direction on content changes
+      const observer = new MutationObserver(() => {
+        if (editor.style.direction !== 'ltr') {
+          editor.style.direction = 'ltr';
+          editor.style.unicodeBidi = 'embed';
+          editor.setAttribute('dir', 'ltr');
+        }
+      });
+      
+      observer.observe(editor, { 
+        childList: true, 
+        subtree: true, 
+        attributes: true, 
+        attributeFilter: ['dir', 'style'] 
+      });
+      
+      // Ensure proper text input direction
+      const ensureTextDirection = () => {
+        editor.style.direction = 'ltr';
+        editor.style.unicodeBidi = 'embed';
+        editor.setAttribute('dir', 'ltr');
+      };
+      
+      editor.addEventListener('focus', ensureTextDirection);
+      editor.addEventListener('keydown', ensureTextDirection);
 
       // seed content
       if (defaultDelta) {
@@ -136,6 +190,9 @@ const Editor = forwardRef<QuillType, EditorProps>(function Editor(
       cleanup = () => {
         quill.off('text-change', handleTextChange);
         quill.off('selection-change', handleSelectionChange);
+        observer?.disconnect();
+        editor?.removeEventListener('focus', ensureTextDirection);
+        editor?.removeEventListener('keydown', ensureTextDirection);
         if (ref && typeof ref !== 'function') {
           (ref as MutableRefObject<QuillType | null>).current = null;
         }
@@ -148,7 +205,7 @@ const Editor = forwardRef<QuillType, EditorProps>(function Editor(
       isMounted = false;
       cleanup?.();
     };
-  }, [isClient, modules, placeholder, readOnly, ref]);
+  }, [isClient, modules, placeholder, readOnly, ref, defaultDelta, defaultHTML]);
 
   return <div ref={containerRef} className={className} />;
 });
