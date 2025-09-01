@@ -11,7 +11,7 @@ export const userApi = baseApi.injectEndpoints({
 
     getPatientByUserId: builder.query<UserResponse, string | number>({
       query: (id) => `/users/patient/${id}`,
-      providesTags: (result, error, id) => [{ type: 'User', id }],
+      providesTags: ['User'],
     }),
 
     updateUser: builder.mutation<UserResponse, { id: string | number; data: Partial<UserResponse> }>({
@@ -20,7 +20,7 @@ export const userApi = baseApi.injectEndpoints({
         method: 'PUT',
         body: data,
       }),
-      invalidatesTags: (result, error, { id }) => [{ type: 'User', id }],
+      invalidatesTags: ['User'],
     }),
 
     getAllDoctors: builder.query<UserResponse[], void>({

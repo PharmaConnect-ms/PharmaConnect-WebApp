@@ -5,6 +5,7 @@ import { Button } from '@mui/material';
 import { VideoCall } from '@mui/icons-material';
 import { AppointmentResponse } from '@/types/appointment-types';
 import { useZoomMeeting } from '@/hooks/useZoomMeeting';
+import { getMeetingLink, hasMeetingLink } from '@/utils/appointment-utils';
 
 interface JoinMeetingButtonProps {
   appointment: AppointmentResponse;
@@ -26,19 +27,22 @@ const JoinMeetingButton: React.FC<JoinMeetingButtonProps> = ({
   const { joinMeeting } = useZoomMeeting();
 
   const handleJoinMeeting = () => {
-    if (appointment.type === 'online' && appointment.meetingLink) {
-      joinMeeting({
-        appointmentId: appointment.id,
-        meetingLink: appointment.meetingLink,
-        patientName,
-        doctorName: appointment.doctor.username,
-        userType
-      });
+    if (appointment.type === 'online') {
+      const meetingLink = getMeetingLink(appointment);
+      if (meetingLink) {
+        joinMeeting({
+          appointmentId: appointment.id,
+          meetingLink: meetingLink,
+          patientName,
+          doctorName: appointment.doctor.username,
+          userType
+        });
+      }
     }
   };
 
-  // Only show button for online appointments with meeting links
-  if (appointment.type !== 'online' || !appointment.meetingLink) {
+  // Only show button for online appointments
+  if (!hasMeetingLink(appointment)) {
     return null;
   }
 

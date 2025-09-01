@@ -8,6 +8,7 @@ import { format } from 'date-fns';
 import { AppointmentResponse } from '@/types/appointment-types';
 import PatientSummaryCard from '@/components/PatientSummaryCard';
 import JoinMeetingButton from '@/components/JoinMeetingButton';
+import { hasMeetingLink } from '@/utils/appointment-utils';
 
 interface PatientInfoCardProps {
   patient: {
@@ -97,7 +98,7 @@ const PatientInfoCard: React.FC<PatientInfoCardProps> = ({ patient, appointment 
               />
               
               {/* Join Meeting Button for Online Appointments */}
-              {appointment.type === 'online' && appointment.meetingLink && (
+              {hasMeetingLink(appointment) && (
                 <JoinMeetingButton
                   appointment={appointment}
                   patientName={patient.username}

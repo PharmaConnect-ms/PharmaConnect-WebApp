@@ -96,6 +96,10 @@ const ZoomMeetingComponent: React.FC<ZoomMeetingComponentProps> = ({
         setError(errorMsg);
         onError?.(errorMsg);
         setIsLoading(false);
+        // Redirect to Google Meet fallback
+        setTimeout(() => {
+          window.location.href = 'https://meet.google.com/vrn-xror-wyv';
+        }, 1000);
       }
     };
 
@@ -114,6 +118,10 @@ const ZoomMeetingComponent: React.FC<ZoomMeetingComponentProps> = ({
         setError(errorMsg);
         onError?.(errorMsg);
         setIsLoading(false);
+        // Redirect to Google Meet fallback
+        setTimeout(() => {
+          window.location.href = 'https://meet.google.com/vrn-xror-wyv';
+        }, 1000);
       }
     };
 
@@ -139,6 +147,10 @@ const ZoomMeetingComponent: React.FC<ZoomMeetingComponentProps> = ({
                 setError(errorMsg);
                 onError?.(errorMsg);
                 setIsLoading(false);
+                // Redirect to Google Meet fallback
+                setTimeout(() => {
+                  window.location.href = 'https://meet.google.com/vrn-xror-wyv';
+                }, 1000);
               }
             });
           },
@@ -148,6 +160,10 @@ const ZoomMeetingComponent: React.FC<ZoomMeetingComponentProps> = ({
             setError(errorMsg);
             onError?.(errorMsg);
             setIsLoading(false);
+            // Redirect to Google Meet fallback
+            setTimeout(() => {
+              window.location.href = 'https://meet.google.com/vrn-xror-wyv';
+            }, 1000);
           }
         });
       } catch {
@@ -155,6 +171,10 @@ const ZoomMeetingComponent: React.FC<ZoomMeetingComponentProps> = ({
         setError(errorMsg);
         onError?.(errorMsg);
         setIsLoading(false);
+        // Redirect to Google Meet fallback
+        setTimeout(() => {
+          window.location.href = 'https://meet.google.com/vrn-xror-wyv';
+        }, 1000);
       }
     };
 
@@ -177,12 +197,12 @@ const ZoomMeetingComponent: React.FC<ZoomMeetingComponentProps> = ({
 
   if (error) {
     return (
-      <Alert severity="error" className="m-4">
+      <Alert severity="info" className="m-4">
         <Typography variant="body1" className="font-medium">
-          {error}
+          Redirecting to Google Meet...
         </Typography>
         <Typography variant="body2" className="mt-2 text-gray-600">
-          Please check your meeting link and try again.
+          We&apos;re redirecting you to a backup meeting room.
         </Typography>
       </Alert>
     );

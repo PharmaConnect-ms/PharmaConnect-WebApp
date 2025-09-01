@@ -15,13 +15,7 @@ const MembersPage = () => {
 
   // Sample family member data - you can replace this with actual data later
   const familyMembers = [
-    {
-      id: 1,
-      name: "Arthur Morgon",
-      relationship: "Brother",
-      age: 35,
-      bloodType: "O+",
-    },
+   
   ];
 
   const handleAddMember = () => {

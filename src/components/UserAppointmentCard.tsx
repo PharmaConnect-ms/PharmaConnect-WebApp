@@ -6,6 +6,7 @@ import { format } from 'date-fns';
 import JoinMeetingButton from '@/components/JoinMeetingButton';
 import { AppointmentResponse, AppointmentStatus } from '@/types/appointment-types';
 import { useZoomMeeting } from '@/hooks/useZoomMeeting';
+import { getMeetingLink, hasMeetingLink } from '@/utils/appointment-utils';
 
 interface UserAppointmentCardProps {
   appointment: AppointmentResponse;
@@ -34,15 +35,18 @@ const UserAppointmentCard: React.FC<UserAppointmentCardProps> = ({
   };
 
   const handleCardClick = () => {
-    // Only handle click for online appointments with meeting links that are scheduled
-    if (appointment.type === 'online' && appointment.meetingLink && appointment.status === AppointmentStatus.SCHEDULED) {
-      joinMeeting({
-        appointmentId: appointment.id,
-        meetingLink: appointment.meetingLink,
-        patientName,
-        doctorName: appointment.doctor.username,
-        userType: 'patient'
-      });
+    // Only handle click for online appointments that are scheduled
+    if (appointment.type === 'online' && appointment.status === AppointmentStatus.SCHEDULED) {
+      const meetingLink = getMeetingLink(appointment);
+      if (meetingLink) {
+        joinMeeting({
+          appointmentId: appointment.id,
+          meetingLink: meetingLink,
+          patientName,
+          doctorName: appointment.doctor.username,
+          userType: 'patient'
+        });
+      }
     }
   };
 
@@ -50,7 +54,7 @@ const UserAppointmentCard: React.FC<UserAppointmentCardProps> = ({
     <Card 
       onClick={handleCardClick}
       className={`p-5 rounded-2xl border border-gray-200 shadow-sm bg-white transition ${
-        appointment.type === 'online' && appointment.meetingLink && appointment.status === AppointmentStatus.SCHEDULED
+        appointment.type === 'online' && appointment.status === AppointmentStatus.SCHEDULED
           ? 'cursor-pointer hover:shadow-lg hover:border-blue-300 hover:-translate-y-1'
           : 'hover:shadow-md'
       }`}
@@ -81,7 +85,7 @@ const UserAppointmentCard: React.FC<UserAppointmentCardProps> = ({
                 variant="filled"
               />
               
-              {appointment.type === 'online' && appointment.meetingLink && appointment.status === AppointmentStatus.SCHEDULED && (
+              {appointment.type === 'online' && appointment.status === AppointmentStatus.SCHEDULED && (
                 <Chip 
                   label="Click to Join"
                   color="primary"
@@ -112,7 +116,7 @@ const UserAppointmentCard: React.FC<UserAppointmentCardProps> = ({
         </Box>
 
         {/* Join Meeting Button for Online Appointments */}
-        {appointment.type === 'online' && appointment.meetingLink && (
+        {hasMeetingLink(appointment) && (
           <Box className="mt-4 flex justify-center" onClick={(e) => e.stopPropagation()}>
             <JoinMeetingButton
               appointment={appointment}

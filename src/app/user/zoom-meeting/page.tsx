@@ -59,8 +59,8 @@ export default function UserZoomMeetingPage() {
 
   useEffect(() => {
     if (!appointmentId || !meetingLink) {
-      setError('Missing appointment information');
-      setLoading(false);
+      // Redirect to fallback Google Meet link if missing appointment information
+      window.location.href = 'https://meet.google.com/vrn-xror-wyv';
       return;
     }
 
@@ -97,7 +97,8 @@ export default function UserZoomMeetingPage() {
         });
       } catch (err) {
         console.error('Error initializing meeting:', err);
-        setError(err instanceof Error ? err.message : 'Failed to initialize meeting');
+        // Redirect to fallback Google Meet link instead of showing error
+        window.location.href = 'https://meet.google.com/vrn-xror-wyv';
       } finally {
         setLoading(false);
       }

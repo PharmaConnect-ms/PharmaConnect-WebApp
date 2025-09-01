@@ -44,6 +44,7 @@ import TimeSlotSelection from '@/components/forms/TimeSlotSelection';
 import BookingConfirmationModal from '@/components/forms/BookingConfirmationModal';
 import { format, parseISO } from 'date-fns';
 import { useZoomMeeting } from '@/hooks/useZoomMeeting';
+import { getMeetingLink } from '@/utils/appointment-utils';
 
 interface TabPanelProps {
     children?: React.ReactNode;
@@ -138,15 +139,18 @@ const AppointmentDashboardUI = () => {
     };
 
     const handleOnlineAppointmentClick = (appointment: AppointmentResponse) => {
-        // Only handle click for online appointments with meeting links
-        if (appointment.type === 'online' && appointment.meetingLink && appointment.status === AppointmentStatus.SCHEDULED) {
-            joinMeeting({
-                appointmentId: appointment.id,
-                meetingLink: appointment.meetingLink,
-                patientName: 'Patient', // You might want to get this from user context/state
-                doctorName: appointment.doctor.username,
-                userType: 'patient'
-            });
+        // Only handle click for online appointments that are scheduled
+        if (appointment.type === 'online' && appointment.status === AppointmentStatus.SCHEDULED) {
+            const meetingLink = getMeetingLink(appointment);
+            if (meetingLink) {
+                joinMeeting({
+                    appointmentId: appointment.id,
+                    meetingLink: meetingLink,
+                    patientName: 'Patient', // You might want to get this from user context/state
+                    doctorName: appointment.doctor.username,
+                    userType: 'patient'
+                });
+            }
         }
     };
 
@@ -262,13 +266,13 @@ const AppointmentDashboardUI = () => {
                                 sx={{
                                     height: '100%',
                                     border: `2px solid ${statusConfig.backgroundColor}`,
-                                    cursor: apt.type === 'online' && apt.meetingLink && apt.status === AppointmentStatus.SCHEDULED ? 'pointer' : 'default',
+                                    cursor: apt.type === 'online' && apt.status === AppointmentStatus.SCHEDULED ? 'pointer' : 'default',
                                     '&:hover': {
                                         boxShadow: 6,
-                                        transform: apt.type === 'online' && apt.meetingLink && apt.status === AppointmentStatus.SCHEDULED ? 'translateY(-2px)' : 'none',
+                                        transform: apt.type === 'online' && apt.status === AppointmentStatus.SCHEDULED ? 'translateY(-2px)' : 'none',
                                     },
                                     transition: 'all 0.3s ease',
-                                    ...(apt.type === 'online' && apt.meetingLink && apt.status === AppointmentStatus.SCHEDULED && {
+                                    ...(apt.type === 'online' && apt.status === AppointmentStatus.SCHEDULED && {
                                         '&:hover': {
                                             boxShadow: 8,
                                             transform: 'translateY(-3px)',
@@ -332,7 +336,7 @@ const AppointmentDashboardUI = () => {
                                             )}
                                             <Typography variant="body2">
                                                 {apt.type === 'online' ? 'Online Consultation' : 'In-Person Visit'}
-                                                {apt.type === 'online' && apt.meetingLink && apt.status === AppointmentStatus.SCHEDULED && (
+                                                {apt.type === 'online' && apt.status === AppointmentStatus.SCHEDULED && (
                                                     <Typography component="span" variant="caption" color="primary" fontWeight={600} ml={1}>
                                                         • Click to Join
                                                     </Typography>
@@ -363,13 +367,12 @@ const AppointmentDashboardUI = () => {
                                     <Box display="flex" gap={1} onClick={(e) => e.stopPropagation()}>
                                         {apt.status === AppointmentStatus.SCHEDULED && (
                                             <>
-                                                {apt.type === 'online' && apt.meetingLink && (
+                                                {apt.type === 'online' && (
                                                     <Button
                                                         variant="contained"
                                                         size="small"
                                                         startIcon={<VideoCallIcon />}
-                                                        href={apt.meetingLink}
-                                                        target="_blank"
+                                                        href={getMeetingLink(apt)}
                                                         sx={{ flex: 1 }}
                                                         onClick={(e) => e.stopPropagation()}
                                                     >
