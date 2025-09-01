@@ -38,3 +38,11 @@ export interface AppointmentResponse {
   meetingLink?: string; 
   notes?: string;
 }
+
+
+export interface AppointmentPayload {
+  timeSlotId: string;
+  patientId: number;
+  type: 'physical' | 'online'; 
+  notes: string;
+}

@@ -18,7 +18,9 @@ const UserFeatures = () => {
     router.push("/user/prescription");
   }
 
-
+  const handleRecords = () => {
+    router.push("/user/records");
+  }
 
   return (
     <Grid container spacing={3}>
@@ -36,7 +38,7 @@ const UserFeatures = () => {
         size={{ xs: 12, md: 3 }}
         sx={{ boxShadow: "12", borderRadius: "24px"  , transition: "transform 0.3s ease-in-out", "&:hover": { transform: "scale(1.05)" } , cursor: "pointer"    }}
       >
-        <div className="flex flex-col justify-center items-center min-h-52 gap-2">
+        <div className="flex flex-col justify-center items-center min-h-52 gap-2" onClick={handleRecords}>
           <FolderSharedIcon sx={{ fontSize: 60, color: "#42C5E7" }} />
           <text className="">Records</text>
         </div>

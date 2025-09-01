@@ -8,3 +8,4 @@ export * from "./condition-book-types";
 export * from "./book-entry-type";
 export * from "./follow-ups-types";
 export * from "./book-entry-type";
+export * from "./notification-types";

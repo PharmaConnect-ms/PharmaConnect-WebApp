@@ -31,7 +31,7 @@ const UserInformation = () => {
 
 
   return (
-    <div className="flex flex-col gap-6 mt-8 bg-white shadow-lg rounded-xl p-8 pt-3 w-full max-h-96 overflow-y-auto">
+    <div className="flex flex-col gap-6 mt-8 bg-white shadow-lg rounded-xl p-8 pt-3 w-full max-h-[450px] overflow-y-auto">
       <h2 className="text-lg font-semibold text-gray-800">
         User Information
       </h2>
