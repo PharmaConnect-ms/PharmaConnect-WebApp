@@ -33,8 +33,9 @@ export default function AppointmentUI({ appointmentId }: AppointmentUIProps) {
     notification,
     handleCloseNotification,
     handleCreatePrescription,
-    handleCreateConditionBook 
-  , handleOpenConditionBook } = useAppointmentPage({ appointmentId: appointmentId });
+    handleCreateConditionBook,
+    handleOpenConditionBook
+  } = useAppointmentPage({ appointmentId: appointmentId });
 
 
   if (isAppointmentLoading || isPatientLoading) {

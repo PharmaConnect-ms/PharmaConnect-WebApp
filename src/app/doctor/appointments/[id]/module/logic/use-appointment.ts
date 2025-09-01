@@ -53,7 +53,6 @@ export const useAppointmentPage = ({ appointmentId }: DoctorSchedulePageProps) =
     console.log('Opening condition book id:', conditionBookId);
     setOpenedConditionBookId(conditionBookId);
     router.push(`/doctor/condition-book-view/${conditionBookId}`);
-
   };
 
   const handleCreatePrescription = async (data: {

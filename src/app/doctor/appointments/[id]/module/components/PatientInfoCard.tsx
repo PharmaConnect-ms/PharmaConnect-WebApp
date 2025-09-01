@@ -7,6 +7,7 @@ import { Person, Email, Phone, CalendarToday } from '@mui/icons-material';
 import { format } from 'date-fns';
 import { AppointmentResponse } from '@/types/appointment-types';
 import PatientSummaryCard from '@/components/PatientSummaryCard';
+import JoinMeetingButton from '@/components/JoinMeetingButton';
 
 interface PatientInfoCardProps {
   patient: {
@@ -94,6 +95,17 @@ const PatientInfoCard: React.FC<PatientInfoCardProps> = ({ patient, appointment 
                 size="small"
                 variant="outlined"
               />
+              
+              {/* Join Meeting Button for Online Appointments */}
+              {appointment.type === 'online' && appointment.meetingLink && (
+                <JoinMeetingButton
+                  appointment={appointment}
+                  patientName={patient.username}
+                  userType="doctor"
+                  variant="contained"
+                  size="small"
+                />
+              )}
             </Box>
           </Box>
         </Box>
