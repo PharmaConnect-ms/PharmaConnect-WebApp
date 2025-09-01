@@ -34,7 +34,7 @@ export default function AppointmentUI({ appointmentId }: AppointmentUIProps) {
     handleCloseNotification,
     handleCreatePrescription,
     handleCreateConditionBook 
-  } = useAppointmentPage({ appointmentId: appointmentId });
+  , handleOpenConditionBook } = useAppointmentPage({ appointmentId: appointmentId });
 
 
   if (isAppointmentLoading || isPatientLoading) {
@@ -94,6 +94,7 @@ export default function AppointmentUI({ appointmentId }: AppointmentUIProps) {
                 isLoading={isConditionBooksLoading}
                 onCreateConditionBook={() => setConditionBookModalOpen(true)}
                 isCreating={isCreatingConditionBook}
+                onOpenBook={handleOpenConditionBook}
               />
             </Grid>
           </Grid>

@@ -6,6 +6,7 @@ import { useGetUserByIdQuery } from "@/redux/api/UserApi";
 import { useGetPrescriptionByUserIdQuery, useAddPrescriptionMutation } from "@/redux/api/prescription-api";
 import { useGetAllConditionBooksByPatientIdQuery, useCreateConditionBookMutation } from "@/redux/api/condition-books";
 import { BookStatus, SeverityLevel } from '@/types/condition-book-types';
+import { useRouter } from 'next/navigation';
 
 interface DoctorSchedulePageProps {
   appointmentId?: string;
@@ -33,6 +34,8 @@ export const useAppointmentPage = ({ appointmentId }: DoctorSchedulePageProps) =
     message: '',
     severity: 'info'
   });
+  const router = useRouter();
+  
 
   const showNotification = (message: string, severity: 'success' | 'error' | 'info' | 'warning' = 'info') => {
     setNotification({
@@ -47,10 +50,10 @@ export const useAppointmentPage = ({ appointmentId }: DoctorSchedulePageProps) =
   };
 
   const handleOpenConditionBook = (conditionBookId: string) => {
-    // store the opened book id so UI or navigation can react
     console.log('Opening condition book id:', conditionBookId);
     setOpenedConditionBookId(conditionBookId);
-    // TODO: navigate or open detailed editor as needed
+    router.push(`/doctor/condition-book-view/${conditionBookId}`);
+
   };
 
   const handleCreatePrescription = async (data: {
@@ -163,9 +166,8 @@ export const useAppointmentPage = ({ appointmentId }: DoctorSchedulePageProps) =
     showNotification,
     handleCloseNotification,
     handleCreatePrescription,
-    handleCreateConditionBook
-  ,
-  openedConditionBookId,
-  handleOpenConditionBook
+    handleCreateConditionBook,
+    openedConditionBookId,
+    handleOpenConditionBook
   };
 };

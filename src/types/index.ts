@@ -5,5 +5,6 @@ export * from "./time-slots";
 export * from "./appointment-types";
 export * from "./prescription-types";
 export * from "./condition-book-types";
-export * from "./book-entry";
-export * from "./follow-ups";
+export * from "./book-entry-type";
+export * from "./follow-ups-types";
+export * from "./book-entry-type";

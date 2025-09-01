@@ -6,6 +6,7 @@ export const ConditionBooksApi = baseApi.injectEndpoints({
 
     getAllConditionBooksByPatientId: builder.query<ConditionBooksResponse[], string>({
       query: (patientId) => `/condition-books/patient/${patientId}`,
+      providesTags: ['ConditionBooks'],
     }),
 
     createConditionBook: builder.mutation<ConditionBooksResponse, ConditionBookPayload>({
@@ -14,6 +15,12 @@ export const ConditionBooksApi = baseApi.injectEndpoints({
         method: 'POST',
         body: payload,
       }),
+      invalidatesTags: ['ConditionBooks'],
+    }),
+
+    getConditionBookById: builder.query<ConditionBooksResponse, string>({
+      query: (id) => `/condition-books/${id}`,
+      providesTags: ['ConditionBooks'],
     }),
 
   }),
@@ -21,6 +28,7 @@ export const ConditionBooksApi = baseApi.injectEndpoints({
 
 export const {
     useGetAllConditionBooksByPatientIdQuery,
-    useCreateConditionBookMutation
+    useCreateConditionBookMutation,
+    useGetConditionBookByIdQuery
 } = ConditionBooksApi;
 

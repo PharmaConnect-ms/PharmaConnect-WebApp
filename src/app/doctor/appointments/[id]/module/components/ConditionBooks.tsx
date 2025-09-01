@@ -28,6 +28,7 @@ import {
     Book,
     Add,
     Visibility,
+    OpenInNew,
     AccessTime,
     TrendingUp,
     Warning,
@@ -415,6 +416,22 @@ const ConditionBooks: React.FC<ConditionBooksProps> = ({
                                                                 <Visibility fontSize="small" />
                                                             </IconButton>
                                                         </Tooltip>
+                                                        {onOpenBook && (
+                                                            <Tooltip title="Open book" arrow>
+                                                                <IconButton
+                                                                    size="small"
+                                                                    color="primary"
+                                                                    onClick={(e) => {
+                                                                        e.stopPropagation();
+                                                                        console.log('ConditionBooks: Open icon clicked for id=', book.id);
+                                                                        onOpenBook(String(book.id));
+                                                                    }}
+                                                                    aria-label={`Open ${title}`}
+                                                                >
+                                                                    <OpenInNew fontSize="small" />
+                                                                </IconButton>
+                                                            </Tooltip>
+                                                        )}
                                                     </Stack>
                                                 </CardContent>
                                             </CardActionArea>
@@ -647,6 +664,7 @@ const ConditionBooks: React.FC<ConditionBooksProps> = ({
                                                 <Button
                                                     onClick={() => {
                                                         if (selectedBook) {
+                                                            console.log('ConditionBooks: OPEN BOOK clicked, selectedBook id=', selectedBook.id);
                                                             if (onOpenBook) onOpenBook(String(selectedBook.id));
                                                             handleCloseViewer();
                                                         }

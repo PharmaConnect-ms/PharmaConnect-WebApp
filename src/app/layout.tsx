@@ -1,6 +1,7 @@
 
 import "./globals.css";
 import ReduxProvider from "@/redux/ReduxProvider";
+import MUIThemeProvider from "@/components/MUIThemeProvider";
 
 
 // Import debug utilities in development
@@ -17,9 +18,11 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
   return (
     <html lang="en">
       <body>
-        <ReduxProvider>
-          {children}
-        </ReduxProvider>
+        <MUIThemeProvider>
+          <ReduxProvider>
+            {children}
+          </ReduxProvider>
+        </MUIThemeProvider>
       </body>
     </html>
   );

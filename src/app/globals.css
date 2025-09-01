@@ -301,3 +301,38 @@ nextjs-portal {
   text-align: left !important;
   unicode-bidi: embed !important;
 }
+
+/* MUI Component Z-index fixes for modals and dialogs */
+.MuiPopover-root,
+.MuiPopper-root,
+.MuiModal-root,
+.MuiSelect-root .MuiSelect-paper,
+.MuiAutocomplete-popper,
+.MuiPickersPopper-root {
+  z-index: 10000 !important;
+}
+
+/* Ensure MUI Select dropdown appears above dialog */
+.MuiSelect-paper {
+  z-index: 10000 !important;
+}
+
+/* Date picker specific fixes */
+.MuiDatePicker-popper,
+.MuiDateTimePicker-popper {
+  z-index: 10000 !important;
+}
+
+/* Autocomplete dropdown fix */
+.MuiAutocomplete-paper {
+  z-index: 10000 !important;
+}
+
+/* Dialog overlay z-index management */
+[data-radix-dialog-overlay] {
+  z-index: 9998;
+}
+
+[data-radix-dialog-content] {
+  z-index: 9999;
+}

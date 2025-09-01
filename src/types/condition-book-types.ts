@@ -1,5 +1,5 @@
-import { BookEntryInterface } from "./book-entry";
-import { FollowUpInterface } from "./follow-ups";
+import { BookEntryInterface } from "./book-entry-type";
+import { FollowUpInterface } from "./follow-ups-types";
 
 export type BookStatus = 'active' | 'remission' | 'closed';
 export type SeverityLevel = "mild" | "normal" | "severe";
