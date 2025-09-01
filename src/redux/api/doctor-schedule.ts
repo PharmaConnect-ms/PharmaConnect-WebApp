@@ -20,7 +20,7 @@ export const DoctorScheduleApi = baseApi.injectEndpoints({
 
     getAllSchedulesByDoctorId: builder.query<DoctorScheduleType[], string>({
       query: (doctorId) => `/doctor-schedules/doctor/${doctorId}`,
-      providesTags: ['DoctorSchedule'],
+      providesTags: ['DoctorSchedule' , 'Appointments'],
     }),
 
   }),

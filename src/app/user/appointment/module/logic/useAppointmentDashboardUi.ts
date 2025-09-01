@@ -36,6 +36,7 @@ export const useAppointmentDashboard = () => {
     selectedDoctorId,
     setSelectedDoctorId,
     selectedScheduleId,
-    setSelectedScheduleId
+    setSelectedScheduleId,
+    user
   };
 };

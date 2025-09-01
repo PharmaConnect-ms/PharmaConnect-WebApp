@@ -6,7 +6,7 @@ export const TimeSlotsApi = baseApi.injectEndpoints({
 
     getAllTimeSlotsBySchedulerId: builder.query<TimeSlotInterface[], string>({
       query: (schedulerId) => `/time-slots/scheduler/${schedulerId}`,
-      providesTags: ['TimeSlot'],
+      providesTags: ['TimeSlot' , 'Appointments'],
     }),
 
   }),

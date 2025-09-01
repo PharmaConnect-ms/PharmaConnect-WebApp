@@ -6,6 +6,7 @@ import { selectAuthUser } from "@/redux/features/authSlice";
 import { useSelector } from "react-redux";
 import { useGetPrescriptionByUserIdQuery } from "@/redux/api/prescription-api";
 import { useGetUserByIdQuery } from "@/redux/api/UserApi";
+import { User } from "lucide-react";
 
 
 
@@ -21,6 +22,7 @@ export const usePrescriptionDashboard = () => {
     loadingPrescriptions,
     doctor,
     loadingDoctor,
-    setSelectedDoctor
+    setSelectedDoctor,
+    User
   };
 };

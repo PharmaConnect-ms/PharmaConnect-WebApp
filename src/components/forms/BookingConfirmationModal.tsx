@@ -30,6 +30,7 @@ import {
   Notes as NotesIcon
 } from '@mui/icons-material';
 import { AppointmentPayload } from '@/types/appointment-types';
+import { useAppointmentDashboard } from '@/app/user/appointment/module/logic/useAppointmentDashboardUi';
 
 interface BookingConfirmationModalProps {
   open: boolean;
@@ -59,6 +60,9 @@ const BookingConfirmationModal: React.FC<BookingConfirmationModalProps> = ({
   const [appointmentType, setAppointmentType] = useState<'physical' | 'online'>('physical');
   const [notes, setNotes] = useState('');
   const [error, setError] = useState<string | null>(null);
+  const { user } = useAppointmentDashboard();
+  const userId = user?.userID ?? "";
+  const userIDInNumber = Number(userId);
 
   const handleNext = () => {
     if (activeStep < steps.length - 1) {
@@ -75,11 +79,12 @@ const BookingConfirmationModal: React.FC<BookingConfirmationModalProps> = ({
   const handleConfirmBooking = async () => {
     if (!selectedSlot) return;
 
+
     try {
       setError(null);
       const bookingData: AppointmentPayload = {
         timeSlotId: selectedSlot.id,
-        patientId: 0, // This should be populated from auth context
+        patientId: userIDInNumber,
         type: appointmentType,
         notes: notes.trim()
       };
