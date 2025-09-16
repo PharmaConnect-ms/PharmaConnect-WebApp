@@ -9,9 +9,6 @@ const baseQuery = fetchBaseQuery({
   prepareHeaders: (headers, { getState }) => {
     const token = (getState() as RootState).auth.user?.token;
     if (token) headers.set('authorization', `Bearer ${token}`);
-    
-    // Don't set Content-Type for file uploads, let browser set it with boundary
-    // RTK Query will handle FormData automatically
     return headers;
   },
 });
@@ -44,6 +41,6 @@ const baseQueryWithReauth: BaseQueryFn<
 export const baseApi = createApi({
   reducerPath: 'baseApi',
   baseQuery: baseQueryWithReauth,
-  tagTypes: ['Patient', 'Auth', 'User', 'DoctorSchedule', 'TimeSlot', 'prescription' , 'bookEntry' , 'FollowUps' , 'ConditionBooks' , 'Notifications', 'Appointments'],
+  tagTypes: ['Patient', 'Auth', 'User', 'DoctorSchedule', 'TimeSlot', 'prescription' , 'bookEntry' , 'FollowUps' , 'ConditionBooks' , 'Notifications', 'Appointments' , 'FamilyProfile'],
   endpoints: () => ({}),
 });
