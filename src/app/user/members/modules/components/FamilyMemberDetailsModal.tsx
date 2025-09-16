@@ -33,6 +33,7 @@ interface FamilyMemberDetailsModalProps {
   onClose: () => void;
   member: FamilyMember | null;
   onEdit?: (member: FamilyMember) => void;
+  onCreateCareProfile?: (member: FamilyMember) => void;
 }
 
 const FamilyMemberDetailsModal: React.FC<FamilyMemberDetailsModalProps> = ({
@@ -40,6 +41,7 @@ const FamilyMemberDetailsModal: React.FC<FamilyMemberDetailsModalProps> = ({
   onClose,
   member,
   onEdit,
+  onCreateCareProfile,
 }) => {
   if (!member) return null;
 
@@ -294,6 +296,15 @@ const FamilyMemberDetailsModal: React.FC<FamilyMemberDetailsModalProps> = ({
                 ) : (
                   <Alert severity="info" sx={{ borderRadius: "8px" }}>
                     No active care plans. You can create care plans to help manage this family member&apos;s care routine.
+                    {onCreateCareProfile && (
+                      <Button
+                        onClick={() => onCreateCareProfile(member)}
+                        size="small"
+                        sx={{ marginTop: 1, display: "block" }}
+                      >
+                        Create First Care Plan
+                      </Button>
+                    )}
                   </Alert>
                 )}
               </CardContent>
@@ -322,6 +333,22 @@ const FamilyMemberDetailsModal: React.FC<FamilyMemberDetailsModalProps> = ({
         <Button onClick={onClose} variant="outlined">
           Close
         </Button>
+        {onCreateCareProfile && (
+          <Button
+            onClick={() => onCreateCareProfile(member)}
+            variant="outlined"
+            sx={{
+              color: "#4CAF50",
+              borderColor: "#4CAF50",
+              "&:hover": {
+                backgroundColor: "rgba(76, 175, 80, 0.04)",
+                borderColor: "#4CAF50",
+              },
+            }}
+          >
+            Create Care Plan
+          </Button>
+        )}
         {onEdit && (
           <Button
             onClick={() => onEdit(member)}

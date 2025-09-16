@@ -11,6 +11,8 @@ import {
   FamilyMemberCard,
   AddFamilyMemberCard,
   AddFamilyMemberModal,
+  EditFamilyMemberModal,
+  CreateCareProfileModal,
   FamilyMemberDetailsModal,
   FamilyStats,
   FamilyMemberSkeleton,
@@ -25,9 +27,20 @@ const FamilyMembersDashboard = () => {
     isLoadingFamilyMembers,
     createFamilyMember,
     isCreatingFamilyMember,
+    updateFamilyMember,
+    isUpdatingFamilyMember,
+    createCareProfile,
+    isCreatingCareProfile,
     isAddMemberModalOpen,
     openAddMemberModal,
     closeAddMemberModal,
+    isEditMemberModalOpen,
+    closeEditMemberModal,
+    selectedMemberForEdit,
+    isAddCareProfileModalOpen,
+    openAddCareProfileModal,
+    closeAddCareProfileModal,
+    selectedMemberForCareProfile,
     isDetailsModalOpen,
     closeDetailsModal,
     selectedMemberForDetails,
@@ -210,6 +223,27 @@ const FamilyMembersDashboard = () => {
         onClose={closeDetailsModal}
         member={selectedMemberForDetails}
         onEdit={handleEditMember}
+        onCreateCareProfile={openAddCareProfileModal}
+      />
+
+      {/* Edit Family Member Modal */}
+      <EditFamilyMemberModal
+        open={isEditMemberModalOpen}
+        onClose={closeEditMemberModal}
+        onSubmit={updateFamilyMember}
+        member={selectedMemberForEdit}
+        isLoading={isUpdatingFamilyMember}
+      />
+
+      {/* Create Care Profile Modal */}
+      <CreateCareProfileModal
+        open={isAddCareProfileModalOpen}
+        onClose={closeAddCareProfileModal}
+        onSubmit={createCareProfile}
+        familyMemberId={selectedMemberForCareProfile?.id || ""}
+        familyMemberName={selectedMemberForCareProfile?.name || ""}
+        userId={user?.userID || ""}
+        isLoading={isCreatingCareProfile}
       />
 
       {/* Notifications */}

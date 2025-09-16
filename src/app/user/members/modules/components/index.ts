@@ -1,6 +1,8 @@
 export { default as FamilyMemberCard } from './FamilyMemberCard';
 export { default as AddFamilyMemberCard } from './AddFamilyMemberCard';
 export { default as AddFamilyMemberModal } from './AddFamilyMemberModal';
+export { default as EditFamilyMemberModal } from './EditFamilyMemberModal';
+export { default as CreateCareProfileModal } from './CreateCareProfileModal';
 export { default as FamilyMemberDetailsModal } from './FamilyMemberDetailsModal';
 export { default as FamilyStats } from './FamilyStats';
 export { default as FamilyMemberSkeleton } from './FamilyMemberSkeleton';
